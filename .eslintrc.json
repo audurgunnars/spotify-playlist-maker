@@ -1,0 +1,8 @@
+{
+	"extends": "@sunshinesmile/eslint-config-react",
+	"rules": {
+		"react/prefer-stateless-function": 0,
+		"promise/prefer-await-to-then": 0,
+		 "no-unused-expressions": 0
+	}
+}
