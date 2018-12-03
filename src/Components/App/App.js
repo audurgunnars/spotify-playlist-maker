@@ -3,6 +3,7 @@ import './App.css'
 import SearchBar from '../SearchBar/SearchBar'
 import SearchResults from '../SearchResults/SearchResults'
 import Playlist from '../Playlist/Playlist'
+import Spotify from '../../util/Spotify'
 
 class App extends Component {
   constructor (props) {
@@ -30,7 +31,8 @@ class App extends Component {
           album: 'Veit ekki',
           id: '3'
         }
-      ]
+      ],
+      searchTerm: ''
     }
   }
   addTrack = (track) => { //change to arrow function to bind automatically
@@ -46,6 +48,17 @@ class App extends Component {
 updatePlaylistName = (name) => {
     this.setState({playlistName: name})
   }
+  savePlaylist = () => {
+    //generates an array of uro values called trackURIs from the play property
+  }
+  search = (searchTerm) => {
+    this.setState({searchTerm})
+  }
+  triggerSearch = async () => {
+    const searchResults = await Spotify.search(this.state.searchTerm)
+    console.log(searchResults)
+     this.setState({searchResults})
+  }
 
   render () {
     return (
@@ -54,10 +67,18 @@ updatePlaylistName = (name) => {
           Ja<span className='highlight'>mmm</span>ing
         </h1>
         <div className='App'>
-          <SearchBar />
+          <SearchBar onType={this.search} triggerSearch={this.triggerSearch}/>
           <div className='App-playlist'>
-            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
-            <Playlist inputValue={this.state.playlistName} onNameChange={this.updatePlaylistName} playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} addTrack={this.addTrack} onRemove={this.removeTrack}/>
+            <SearchResults
+            searchResults={this.state.searchResults}
+            onAdd={this.addTrack} />
+            <Playlist
+            inputValue={this.state.playlistName}
+            onNameChange={this.updatePlaylistName}
+            playlistName={this.state.playlistName}
+            playlistTracks={this.state.playlistTracks}
+            addTrack={this.addTrack}
+            onRemove={this.removeTrack}/>
           </div>
         </div>
       </div>

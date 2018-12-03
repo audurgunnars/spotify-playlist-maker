@@ -3,8 +3,8 @@ import './Playlist.css'
 import Tracklist from '../Tracklist/Tracklist'
 
 class Playlist extends Component {
-  handleNameChange = (e) => {
-    this.props.onNameChange(e.target.value)
+  handleNameChange = (event) => {
+    this.props.onNameChange(event.target.value)
   }
   
   render () {
@@ -12,7 +12,7 @@ class Playlist extends Component {
       <div className='Playlist'>
         <input defaultValue={"New Playlist"} onChange={this.handleNameChange}/>
         <Tracklist tracks={this.props.playlistTracks} addTrack={this.props.addTrack} isRemoval onRemove={this.props.removeTrack} />
-        <a className='Playlist-save'>SAVE TO SPOTIFY</a>
+        <a className='Playlist-save' onClick={this.props.onSave}>SAVE TO SPOTIFY</a>
       </div>
     )
   }
