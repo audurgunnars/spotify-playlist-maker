@@ -7,7 +7,7 @@ class SearchResults extends Component {
     return (
       <div className='SearchResults'>
         <h2>Results</h2>
-        <Tracklist tracks={this.props.searchResults} onAdd={this.props.onAdd} isRemoval={false} /* skref 43 */ />
+        <Tracklist tracks={this.props.searchResults} addTrack={this.props.addTrack} isRemoval={false} /* skref 43 */ />
         {/* nr.33 Stóð áður add a tracklist component */}
       </div>
     )

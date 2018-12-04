@@ -37,15 +37,19 @@ class App extends Component {
   }
   addTrack = (track) => { //change to arrow function to bind automatically
     if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
- return;
-}
-  this.setState({playlistTracks: this.state.playlistTracks.push(track)})
+      return;
+    }
+    // let pushTracks = this.state.playlistTracks
+    // pushTracks.push(track)
+    // this.setState({playlistTracks: pushTracks})
+
+    this.setState({playlistTracks: [...this.state.playlistTracks, track]})
   }
   removeTrack = (track) => {
-      const trackRemoved = this.state.playlistTracks.filter(trackRemove => track.id !== trackRemove.id)
-      this.setState({playlistTracks: trackRemoved})
+    const trackRemoved = this.state.playlistTracks.filter(trackRemove => track.id !== trackRemove.id)
+    this.setState({playlistTracks: trackRemoved})
   }
-updatePlaylistName = (name) => {
+  updatePlaylistName = (name) => {
     this.setState({playlistName: name})
   }
   savePlaylist = () => {
@@ -71,14 +75,14 @@ updatePlaylistName = (name) => {
           <div className='App-playlist'>
             <SearchResults
             searchResults={this.state.searchResults}
-            onAdd={this.addTrack} />
+            addTrack={this.addTrack} />
             <Playlist
             inputValue={this.state.playlistName}
             onNameChange={this.updatePlaylistName}
             playlistName={this.state.playlistName}
             playlistTracks={this.state.playlistTracks}
             addTrack={this.addTrack}
-            onRemove={this.removeTrack}/>
+            removeTrack={this.removeTrack}/>
           </div>
         </div>
       </div>
