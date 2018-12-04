@@ -9,7 +9,6 @@ class Tracklist extends Component {
         {this.props.tracks.map(track => {
           return <Track key={track.id} track={track}
             addTrack={this.props.addTrack} isRemoval={this.props.isRemoval} removeTrack={this.props.removeTrack} />
-          { /* skref 34 */ }
         })}
       </div>
     )

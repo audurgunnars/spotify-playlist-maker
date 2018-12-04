@@ -8,6 +8,7 @@ class Playlist extends Component {
   }
 
   render () {
+    //console.log('this props' + this.props.playlistTracks)
     return (
       <div className='Playlist'>
         <input defaultValue={"New Playlist"} onChange={this.handleNameChange}/>

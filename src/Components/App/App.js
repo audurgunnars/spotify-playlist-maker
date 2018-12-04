@@ -13,13 +13,13 @@ class App extends Component {
         {
           name: 'Auður',
           artist: 'Gunnarsdóttir',
-          album: 'Láttu mig vera',
+          album: {name: 'Láttu mig vera'},
           id: '0'
         },
         {
           name: 'Auður',
           artist: 'Gunnarsdóttir',
-          album: 'Dúllan mín',
+          album: {name: 'Dúllan mín'},
           id: '1'
         }
       ],
@@ -28,21 +28,18 @@ class App extends Component {
         {
           name: 'All Star',
           artist: 'Smash Mouth',
-          album: 'Veit ekki',
-          id: '3'
+          album: {name: 'Veit ekki'},
+          id: '3',
+          uri: "spotify:track:2eNSyVH3sNPiAj9WpRYK73"
         }
       ],
       searchTerm: ''
     }
   }
-  addTrack = (track) => { //change to arrow function to bind automatically
+  addTrack = (track) => {
     if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
       return;
     }
-    // let pushTracks = this.state.playlistTracks
-    // pushTracks.push(track)
-    // this.setState({playlistTracks: pushTracks})
-
     this.setState({playlistTracks: [...this.state.playlistTracks, track]})
   }
   removeTrack = (track) => {
@@ -53,18 +50,22 @@ class App extends Component {
     this.setState({playlistName: name})
   }
   savePlaylist = () => {
-    //generates an array of uro values called trackURIs from the play property
+    const trackURIs = this.state.playlistTracks.map((trackURI,index) => trackURI = this.state.playlistTracks[index].uri)
+    console.log('const track uris', trackURIs)
+    Spotify.savePlaylist(this.state.playlistName, trackURIs)
+    this.setState({playlistName: 'New Playlist'}) //set the state of playlistName to new playlist
+    this.setState({playlistTracks: []})
   }
   search = (searchTerm) => {
     this.setState({searchTerm})
   }
   triggerSearch = async () => {
     const searchResults = await Spotify.search(this.state.searchTerm)
-    console.log(searchResults)
      this.setState({searchResults})
   }
 
   render () {
+    console.log(this.state.playlistTracks)
     return (
       <div>
         <h1>
@@ -82,7 +83,8 @@ class App extends Component {
             playlistName={this.state.playlistName}
             playlistTracks={this.state.playlistTracks}
             addTrack={this.addTrack}
-            removeTrack={this.removeTrack}/>
+            removeTrack={this.removeTrack}
+            onSave={this.savePlaylist}/>
           </div>
         </div>
       </div>
