@@ -52,7 +52,7 @@ const Spotify = {
       const playlistResponse = await fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
         headers: {Authorization: `Bearer ${accessToken}`},
         method: 'POST',
-        body: JSON.stringify({name: "commit me if i'm a playlist"})
+        body: JSON.stringify({name: playlistName})
       })
       if (playlistResponse.ok) {
         const jsonPlaylistResponse = await playlistResponse.json()
