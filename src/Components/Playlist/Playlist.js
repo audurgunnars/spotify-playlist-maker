@@ -10,7 +10,7 @@ class Playlist extends Component {
   render () {
     return (
       <div className='Playlist'>
-        <input defaultValue={"New Playlist"} onChange={this.handleNameChange}/>
+        <input placeholder="New Playlist" value={this.props.playlistName} onChange={this.handleNameChange}/>
         <Tracklist tracks={this.props.playlistTracks}
         addTrack={this.props.addTrack}
         isRemoval
