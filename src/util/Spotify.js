@@ -8,7 +8,7 @@ let expiresIn = 0
 const getUserID = async accessToken => {
   try {
     const response = await fetch('https://api.spotify.com/v1/me', {
-      headers: { Authorization: `Bearer ${accessToken}`}
+      headers: {Authorization: `Bearer ${accessToken}`},
     })
     if (response.ok) {
       const jsonResponse = await response.json()
@@ -20,11 +20,14 @@ const getUserID = async accessToken => {
 }
 const createPlaylistID = async (userID, accessToken, playlistName) => {
   try {
-    const playlistResponse = await fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
-      headers: {Authorization: `Bearer ${accessToken}`},
-      method: 'POST',
-      body: JSON.stringify({name: playlistName})
-    })
+    const playlistResponse = await fetch(
+      `https://api.spotify.com/v1/users/${userID}/playlists`,
+      {
+        headers: {Authorization: `Bearer ${accessToken}`},
+        method: 'POST',
+        body: JSON.stringify({name: playlistName}),
+      }
+    )
     if (playlistResponse.ok) {
       const jsonPlaylistResponse = await playlistResponse.json()
       return jsonPlaylistResponse.id
@@ -35,11 +38,14 @@ const createPlaylistID = async (userID, accessToken, playlistName) => {
 }
 const trackToPlaylist = async (playlistID, accessToken, trackURIs) => {
   try {
-    const addSongsToPlaylist = await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, {
-      headers: {Authorization: `Bearer ${accessToken}`},
-      method: 'POST',
-      body: JSON.stringify({uris: trackURIs})
-    })
+    const addSongsToPlaylist = await fetch(
+      `https://api.spotify.com/v1/playlists/${playlistID}/tracks`,
+      {
+        headers: {Authorization: `Bearer ${accessToken}`},
+        method: 'POST',
+        body: JSON.stringify({uris: trackURIs}),
+      }
+    )
     return addSongsToPlaylist
   } catch (error) {
     console.log(error)
@@ -57,20 +63,23 @@ const Spotify = {
       accessToken = accessToken[1]
       expiresIn = +expiresIn[1]
 
-      window.setTimeout(() => accessToken = '', expiresIn * 1000)
+      window.setTimeout(() => (accessToken = ''), expiresIn * 1000)
       window.history.pushState('Access Token', null, '/')
       return accessToken
     }
     window.location = url
   },
-  search: async (searchTerm) => {
+  search: async searchTerm => {
     const accessToken = Spotify._getAccessToken()
     try {
-      const response = await fetch(`https://api.spotify.com/v1/search?type=track&q=${searchTerm}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
+      const response = await fetch(
+        `https://api.spotify.com/v1/search?type=track&q=${searchTerm}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
-      })
+      )
       const jsonResponse = await response.json()
       return jsonResponse.tracks.items
     } catch (error) {
@@ -82,7 +91,7 @@ const Spotify = {
     const userID = await getUserID(accessToken)
     const playlistID = await createPlaylistID(userID, accessToken)
     await trackToPlaylist(playlistID, accessToken, trackURIs)
-  }
+  },
 }
 
 export default Spotify
