@@ -1,19 +1,21 @@
 const clientID = '441668fabc3c41cba1445ae305aaec86'
-const clientSecret = '38ca950819b246fb8090748b94bfcf31'
-const cors = 'https://cors-anywhere.herokuapp.com/'
 const redirectURI = 'http%3A%2F%2Flocalhost%3A3000%2F'
 const scope = 'playlist-modify-private playlist-modify-public'
 const url = `https://accounts.spotify.com/authorize?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=token&scope=${scope}`
+let accessToken = ''
+let expiresIn = 0
 const Spotify = {
   _getAccessToken: () => {
-    if (!window.location.href.match(/access_token=([^&]*)/)) {
-      window.location = url
-    }
+    if (accessToken) return accessToken
     const currentUrl = window.location.href
-    const accessToken = currentUrl.match(/access_token=([^&]*)/)[1]
-    const expiresIn = currentUrl.match(/expires_in=([^&]*)/)[1]
-    // console.log({accessToken, expiresIn})
-    return accessToken
+    accessToken = currentUrl.match(/access_token=([^&]*)/)[1]
+    expiresIn = +currentUrl.match(/expires_in=([^&]*)/)[1]
+    if (accessToken && expiresIn) {
+      window.setTimeout(() => accessToken = '', expiresIn * 1000)
+      window.history.pushState('Access Token', null, '/')
+      return
+    }
+    window.location = url
   },
   search: async (searchTerm) => {
     const accessToken = Spotify._getAccessToken()
@@ -30,10 +32,6 @@ const Spotify = {
     }
   },
   savePlaylist: async (playlistName, trackURIs) => {
-    console.log('playlistName', playlistName)
-    console.log('trackURIs', trackURIs)
-    // playlistName !== "" ? return playlistName : "something"
-    // trackURIs !== [] ? return trackURIs : "something"
     const accessToken = Spotify._getAccessToken()
     let userID = ''
     let playlistID = ''
