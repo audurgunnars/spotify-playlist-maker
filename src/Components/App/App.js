@@ -6,36 +6,13 @@ import Playlist from '../Playlist/Playlist'
 import Spotify from '../../util/Spotify'
 
 class App extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      searchResults: [
-        {
-          name: 'Auður',
-          artist: 'Gunnarsdóttir',
-          album: {name: 'Láttu mig vera'},
-          id: '0'
-        },
-        {
-          name: 'Auður',
-          artist: 'Gunnarsdóttir',
-          album: {name: 'Dúllan mín'},
-          id: '1'
-        }
-      ],
+    state = {
+      searchResults: [],
       playlistName: '',
-      playlistTracks: [
-        {
-          name: 'All Star',
-          artist: 'Smash Mouth',
-          album: {name: 'Veit ekki'},
-          id: '3',
-          uri: "spotify:track:2eNSyVH3sNPiAj9WpRYK73"
-        }
-      ],
+      playlistTracks: [],
       searchTerm: ''
     }
-  }
+  
   addTrack = (track) => {
     if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
       return;
