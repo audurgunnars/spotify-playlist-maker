@@ -12,6 +12,7 @@ class Playlist extends Component {
       <div className="Playlist">
         <input
           placeholder="New Playlist"
+          id="newplaylist"
           value={this.props.playlistName}
           onChange={this.handleNameChange}
         />

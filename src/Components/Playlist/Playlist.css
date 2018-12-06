@@ -20,7 +20,7 @@
   font-size: 1.55rem;
   color: #fff;
 }
-input::placeholder {
+input[id=newplaylist]::placeholder {
   color: white;
 }
 
