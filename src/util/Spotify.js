@@ -89,7 +89,7 @@ const Spotify = {
   savePlaylist: async (playlistName, trackURIs) => {
     const accessToken = Spotify._getAccessToken()
     const userID = await getUserID(accessToken)
-    const playlistID = await createPlaylistID(userID, accessToken)
+    const playlistID = await createPlaylistID(userID, accessToken, playlistName)
     await trackToPlaylist(playlistID, accessToken, trackURIs)
   },
 }
