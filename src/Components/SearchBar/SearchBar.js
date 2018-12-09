@@ -4,7 +4,7 @@ import './SearchBar.css'
 class SearchBar extends Component {
   keyPress = event => {
     const code = event.keyCode || event.which
-    if(code === 13) this.props.triggerSearch()    
+    if (code === 13) this.props.triggerSearch()
   }
   handleTermChange = event => {
     this.props.onType(event.target.value)
@@ -13,11 +13,12 @@ class SearchBar extends Component {
     return (
       <div className="SearchBar">
         <input
+          value={this.props.input}
           placeholder="Enter A Song, Album, or Artist"
           onChange={this.handleTermChange}
           onKeyPress={this.keyPress}
         />
-        <a onClick={this.props.triggerSearch}>SEARCH</a>
+        <a onClick={() => this.props.triggerSearch()}>SEARCH</a>
       </div>
     )
   }

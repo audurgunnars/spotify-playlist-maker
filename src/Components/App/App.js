@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import queryString from 'query-string'
+
 import './App.css'
 import SearchBar from '../SearchBar/SearchBar'
 import SearchResults from '../SearchResults/SearchResults'
@@ -11,6 +13,14 @@ class App extends Component {
     playlistName: '',
     playlistTracks: [],
     searchTerm: '',
+  }
+  componentDidMount() {
+    const currentUrl = window.location.href
+    const parsed = queryString.parse(currentUrl)
+    const searchTerm = parsed.state
+    if (!searchTerm) return
+    this.setState({searchTerm})
+    this.triggerSearch(searchTerm)
   }
 
   addTrack = track => {
@@ -41,8 +51,8 @@ class App extends Component {
   search = searchTerm => {
     this.setState({searchTerm})
   }
-  triggerSearch = async () => {
-    const searchResults = await Spotify.search(this.state.searchTerm)
+  triggerSearch = async searchTerm => {
+    const searchResults = await Spotify.search(searchTerm || this.state.searchTerm)
     this.setState({searchResults})
   }
 
@@ -53,7 +63,7 @@ class App extends Component {
           Ja<span className="highlight">mmm</span>ing
         </h1>
         <div className="App">
-          <SearchBar onType={this.search} triggerSearch={this.triggerSearch} />
+          <SearchBar onType={this.search} triggerSearch={this.triggerSearch} input={this.state.searchTerm} />
           <div className="App-playlist">
             <SearchResults
               searchResults={this.state.searchResults}

@@ -53,7 +53,7 @@ const trackToPlaylist = async (playlistID, accessToken, trackURIs) => {
 }
 
 const Spotify = {
-  _getAccessToken: () => {
+  _getAccessToken: searchTerm => {
     if (accessToken) return accessToken
     const currentUrl = window.location.href
     accessToken = currentUrl.match(/access_token=([^&]*)/)
@@ -67,10 +67,10 @@ const Spotify = {
       window.history.pushState('Access Token', null, '/')
       return accessToken
     }
-    window.location = url
+    window.location = url + `&state=${searchTerm}`
   },
   search: async searchTerm => {
-    const accessToken = Spotify._getAccessToken()
+    const accessToken = Spotify._getAccessToken(searchTerm)
     try {
       const response = await fetch(
         `https://api.spotify.com/v1/search?type=track&q=${searchTerm}`,
@@ -84,6 +84,7 @@ const Spotify = {
       return jsonResponse.tracks.items
     } catch (error) {
       console.log(error)
+      return []
     }
   },
   savePlaylist: async (playlistName, trackURIs) => {
