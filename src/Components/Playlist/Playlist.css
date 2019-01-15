@@ -30,7 +30,7 @@ input[id=newplaylist]::placeholder {
   padding: .77rem 0;
   border-radius: 54px;
   margin-top: 1.27rem;
-  background-color: #6c41ec;
+  background-color: #7b7fad;
   text-align: center;
   font-size: .83rem;
   transition: background-color .25s;

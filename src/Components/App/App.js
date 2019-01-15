@@ -60,7 +60,7 @@ class App extends Component {
     return (
       <div>
         <h1>
-          Ja<span className="highlight">mmm</span>ing
+          Spotify Playlist Maker
         </h1>
         <div className="App">
           <SearchBar onType={this.search} triggerSearch={this.triggerSearch} input={this.state.searchTerm} />
