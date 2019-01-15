@@ -1,7 +1,8 @@
 {
-  "name": "jammming",
+  "name": "spotify-playlist-maker",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://playlist.audurgunnars.com/",
   "dependencies": {
     "query-string": "^6.2.0",
     "react": "^16.6.3",
@@ -14,7 +15,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint .",
-    "fix": "eslint . --fix"
+    "fix": "eslint . --fix",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -27,6 +30,7 @@
   ],
   "devDependencies": {
     "@sunshinesmile/eslint-config-react": "^1.1.1",
-    "eslint": "5.6.0"
+    "eslint": "5.6.0",
+    "gh-pages": "^2.0.1"
   }
 }
